@@ -9,32 +9,48 @@
     <link rel="stylesheet" th:href="@{/css/principal.css}">
 </head>
 
-<body>
+<body class="bg-light">
 
 <div class="container">
 
-    <div class="mt-5 mb-4">
-        <h1>Home</h1>
-    </div>
+    <header class="mt-5 mb-4 text-center">
+        <h1>Bienvenido a Patitas</h1>
+    </header>
 
     <div class="alert alert-success" role="alert" th:if="${loginModel.codigo == '00'}">
-        Bienvenido <span th:text="${loginModel.nombreUsuario}"></span>
+        Bienvenido <span th:text="${loginModel.nombreUsuario}"></span>!
     </div>
 
-    <div class="mb-3">
-
+    <nav class="mb-3">
         <div class="list-group list-group-horizontal">
-
             <a href="#" class="list-group-item list-group-item-action active">Home</a>
             <a href="#" class="list-group-item list-group-item-action">Ver mascotas</a>
             <a href="#" class="list-group-item list-group-item-action">Hacer donación</a>
             <a href="#" class="list-group-item list-group-item-action">Cerrar sesión</a>
-
         </div>
+    </nav>
 
-    </div>
+    <section class="mt-4">
+        <h2 class="text-center">Últimas Mascotas en Adopción</h2>
+        <!-- Aquí puedes agregar una lista o grid de mascotas -->
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card mb-4 shadow-sm">
+                    <img src="ruta-a-imagen-mascota" class="card-img-top" alt="Nombre de la mascota">
+                    <div class="card-body">
+                        <h5 class="card-title">Nombre de la mascota</h5>
+                        <p class="card-text">Descripción breve de la mascota.</p>
+                        <a href="#" class="btn btn-primary">Ver detalles</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Repite el bloque anterior para más mascotas -->
+        </div>
+    </section>
 
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-xxxx" crossorigin="anonymous"></script>
 
 </body>
 

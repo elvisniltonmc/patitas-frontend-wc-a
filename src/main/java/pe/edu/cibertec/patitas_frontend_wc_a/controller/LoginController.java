@@ -33,6 +33,9 @@ public class LoginController {
                              @RequestParam("password") String password,
                              Model model) {
 
+        //Creacion de variable para enviar los registros al front
+        LoginModel loginmodel;
+
         // Validar campos de entrada
         if (tipoDocumento == null || tipoDocumento.trim().length() == 0 ||
                 numeroDocumento == null || numeroDocumento.trim().length() == 0 ||
@@ -48,6 +51,7 @@ public class LoginController {
 
             // invocar servicio de autenticación
             LoginRequestDTO loginRequestDTO = new LoginRequestDTO(tipoDocumento, numeroDocumento, password);
+
             Mono<LoginResponseDTO> monoLoginResponseDTO = webClientAutenticacion.post()
                     .uri("/login")
                     .body(Mono.just(loginRequestDTO), LoginRequestDTO.class)
@@ -57,24 +61,21 @@ public class LoginController {
             // recuperar resultado modo bloqueante (Sincrónico)
             LoginResponseDTO loginResponseDTO = monoLoginResponseDTO.block();
 
-            if (loginResponseDTO.codigo().equals("00")){
-
-                LoginModel loginModel = new LoginModel("00", "", loginResponseDTO.nombreUsuario());
-                model.addAttribute("loginModel", loginModel);
+            if(loginResponseDTO.codigo().equals("00")){
+                loginmodel = new LoginModel("00",
+                        "",loginResponseDTO.nombreUsuario());
+                model.addAttribute("loginmodel",loginmodel);
                 return "principal";
-
             } else {
-
-                LoginModel loginModel = new LoginModel("02", "Error: Autenticación fallida", "");
-                model.addAttribute("loginModel", loginModel);
+                loginmodel = new LoginModel("01","Falta datos","");
+                model.addAttribute("loginmodel",loginmodel);
                 return "inicio";
-
             }
 
         } catch(Exception e) {
 
-            LoginModel loginModel = new LoginModel("99", "Error: Ocurrió un problema en la autenticación", "");
-            model.addAttribute("loginModel", loginModel);
+            loginmodel = new LoginModel("99", "Error: Ocurrió un problema en la autenticación", "");
+            model.addAttribute("loginModel", loginmodel);
             System.out.println(e.getMessage());
             return "inicio";
 
